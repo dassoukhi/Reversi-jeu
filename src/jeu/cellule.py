@@ -22,3 +22,5 @@ def get_types():
 
 def extract_positions(cellules):
     return list(map(lambda cellule: (cellule['x'], cellule['y']), cellules))
+
+    

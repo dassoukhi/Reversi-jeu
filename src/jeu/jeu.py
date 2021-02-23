@@ -1,11 +1,12 @@
 from .plateau import new_plateau, render, get_cellule_distribution, get_changement_autorisee_cellule, est_rempli
-from .plateau import appliquer_changement_cellule, peut_chenger_de_couleur, get_meneur_jeu_type, get_score_ForMinMax
+from .plateau import appliquer_changement_cellule, peut_changer_de_couleur, get_meneur_jeu_type, get_score_ForMinMax
 from .cellule import TYPE_WHITE, TYPE_BLACK, extract_positions, new_cellule
 from .color import colorize, BOLD
 from .tab import new_tab, draw_cellules, draw_cellule
 import random
 import time
 from math import inf
+from reversi import clear
 
 def startWithIA():
     print("\n######### GAME STARTED ############\n")
@@ -27,9 +28,9 @@ def startWithIA():
 
             if not est_rempli(plateau):
                 inverser_type_joueur = get_inverser_type_joueur(type_courrant)
-                if peut_chenger_de_couleur(plateau, inverser_type_joueur):
+                if peut_changer_de_couleur(plateau, inverser_type_joueur):
                     type_courrant = inverser_type_joueur
-                elif not peut_chenger_de_couleur(plateau, type_courrant):
+                elif not peut_changer_de_couleur(plateau, type_courrant):
                     print("\nDésolé, plus de possibilite\n")
                     break
                 else:
@@ -67,9 +68,9 @@ def start():
 
             if not est_rempli(plateau):
                 inverser_type_joueur = get_inverser_type_joueur(type_courrant)
-                if peut_chenger_de_couleur(plateau, inverser_type_joueur):
+                if peut_changer_de_couleur(plateau, inverser_type_joueur):
                     type_courrant = inverser_type_joueur
-                elif not peut_chenger_de_couleur(plateau, type_courrant):
+                elif not peut_changer_de_couleur(plateau, type_courrant):
                     print("\nDésolé, plus de possibilite\n")
                     break
                 else:
@@ -84,7 +85,6 @@ def start():
 
     except Exception as e:
         print("An unexpected error occured, sorry.\nMessage: {0}\n".format(str(e)))
-
 
 def changement_couleur_depuis_depart(plateau, cType):
     try:
@@ -136,7 +136,7 @@ def print_score(cell_distribution):
 
 def minimax(plateau, depth, player):
 
-    if player == TYPE_WHITE:
+    if player == TYPE_BLACK:
         best = [new_cellule(-1, -1), inf]
     else:
         best = [new_cellule(-1, -1), -inf]
@@ -156,11 +156,12 @@ def minimax(plateau, depth, player):
 
         score[0] = position
 
-        if player == TYPE_WHITE:
+        if player == TYPE_BLACK:
             if score[1] < best[1]:
                 best = score
         else:
             if score[1] > best[1]:
                 best = score
     return best
+
 

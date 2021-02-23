@@ -80,12 +80,10 @@ def get_score_ForMinMax(tab):
 
     distribution = get_cellule_distribution(tab)
 
-    if(distribution[TYPE_WHITE] > distribution[TYPE_BLACK]):
-        return -1
-
-    return 1
+    return distribution[TYPE_WHITE] - distribution[TYPE_BLACK]
 
 
+    
 def est_rempli(tab):
     return get_cellule_distribution(tab)[TYPE_EMPTY] == 0
 
@@ -143,7 +141,7 @@ def est_legal_changement_couleur(tab, cellule):
     return len(get_changement_cell_apres_changement_effectuee(tab, cellule)) > 0
 
 
-def peut_chenger_de_couleur(tab, cType):
+def peut_changer_de_couleur(tab, cType):
     return len(get_changement_autorisee_cellule(tab, cType)[cType]) > 0
 
 
@@ -159,7 +157,7 @@ def get_changement_autorisee_cellule(tab, cType):
 
 
 def appliquer_changement_cellule(tab, cellule):
-    """ Attempt to place cellule in the plateau """
+    """ Appliquer le changement de cellule """
 
     if not est_legal_changement_couleur(tab, cellule):
         return False
